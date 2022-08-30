@@ -1,0 +1,67 @@
+:root {
+	--background-dark: #000000;
+	--background: #202020;
+}
+
+* {	 
+	box-sizing: border-box;
+}
+
+html, body {
+	display: block;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+body {	
+	background-color: var(--background-dark);
+}
+
+body {
+	user-select: none;
+}
+
+body [contenteditable] {
+	user-select: text;	
+}
+
+.app-container {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	position: relative;
+	flex-direction: column;
+}
+
+.markdown {
+	display: flex;
+	align-items: flex-start;
+	position: relative;
+	background-color: var(--background);
+	min-height: 100%;
+	overflow-x: visible;
+
+	padding: 20px;
+}
+
+.markdown-content {	
+	display: block;
+	flex: 1 1 auto;
+	margin-left: auto;
+	margin-right: auto;
+	padding-bottom: 500px;
+
+	max-width: 700px;
+}
+
+.markdown-block {
+	display: block;
+
+}
+
+[contenteditable] {
+	outline: 0px;
+}
