@@ -1,15 +1,15 @@
 mod invoke;
 mod log;
 mod markdown;
-mod markdown_field;
+mod markdown_editor;
 
-use crate::markdown::Markdown;
+use crate::markdown::{Markdown, MarkdownBlockEdit};
 use yew::prelude::*;
 
-use markdown_field::MarkdownField;
+use markdown_editor::MarkdownEditor;
 
 enum ModelMessage {
-    MarkdownEdit(Markdown),
+    BlockEdit(MarkdownBlockEdit),
 }
 
 #[derive(Properties, PartialEq, Default)]
@@ -31,8 +31,8 @@ impl Component for Model {
 
     fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
         match msg {
-            ModelMessage::MarkdownEdit(new_markdown) => {
-                self.markdown = new_markdown;
+            ModelMessage::BlockEdit(edit) => {
+                self.markdown.block_edit(edit);
 
                 true
             }
@@ -42,9 +42,9 @@ impl Component for Model {
     fn view(&self, ctx: &Context<Self>) -> Html {
         html! {
             <div class="app-container">
-                <MarkdownField
-                    onedit={ ctx.link().callback(ModelMessage::MarkdownEdit) }
+                <MarkdownEditor
                     markdown={ self.markdown.clone() }
+                    onblockedit={ ctx.link().callback(ModelMessage::BlockEdit) }
                 />
             </div>
         }

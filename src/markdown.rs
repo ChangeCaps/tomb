@@ -16,15 +16,16 @@ impl Markdown {
         Self::default()
     }
 
-    pub fn from_str(string: &str) -> Self {
-        let blocks = string
-            .split("\n")
-            .map(|line| MarkdownBlock::new(line.into()))
-            .collect();
+    pub fn iter(&self) -> impl Iterator<Item = &MarkdownBlock> {
+        self.blocks.iter()
+    }
 
-        Self { blocks }
+    pub fn block_edit(&mut self, MarkdownBlockEdit(i, block): MarkdownBlockEdit) {
+        self.blocks[i] = block;
     }
 }
+
+pub struct MarkdownBlockEdit(pub usize, pub MarkdownBlock);
 
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct MarkdownBlock {
