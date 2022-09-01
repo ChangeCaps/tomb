@@ -1,9 +1,11 @@
 use web_sys::HtmlElement;
 use yew::prelude::*;
 
-use crate::markdown::{Markdown, MarkdownBlock, MarkdownBlockEdit};
+use crate::markdown::{Markdown, MarkdownBlock, MarkdownBlockEdit, MarkdownBlockInsert};
 
-pub enum MarkdownEditorMessage {}
+pub enum MarkdownEditorMessage {
+    Focus(usize),
+}
 
 #[derive(Properties, PartialEq)]
 pub struct MarkdownEditorProperties {
@@ -11,10 +13,12 @@ pub struct MarkdownEditorProperties {
     pub markdown: Markdown,
     #[prop_or_default]
     pub onblockedit: Callback<MarkdownBlockEdit>,
+    #[prop_or_default]
+    pub onblockinsert: Callback<MarkdownBlockInsert>,
 }
 
 pub struct MarkdownEditor {
-    pub node_refs: Vec<NodeRef>,
+    node_refs: Vec<NodeRef>,
 }
 
 impl Component for MarkdownEditor {
@@ -85,6 +89,12 @@ pub struct MarkdownEditorBlockProperties {
     pub node_ref: NodeRef,
     #[prop_or_default]
     pub onedit: Callback<MarkdownBlock>,
+    #[prop_or_default]
+    pub insertbelow: Callback<MarkdownBlock>,
+    #[prop_or_default]
+    pub remove: Callback<()>,
+    #[prop_or_default]
+    pub mergeabove: Callback<()>,
 }
 
 pub struct MarkdownEditorBlock {
@@ -122,7 +132,13 @@ impl Component for MarkdownEditorBlock {
 
                 true
             }
-            MarkdownEditorBlockMessage::Edit(_event) => false,
+            MarkdownEditorBlockMessage::Edit(event) => {
+                if event.key() == "Enter" && !event.shift_key() {
+                    ctx.props().insertbelow.emit(MarkdownBlock::default());
+                }
+
+                false
+            }
         }
     }
 

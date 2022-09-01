@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
 
 :root {
-	--background-dark: #000000;
+	--background-black: #000000;
+	--background-dark: #101010;
 	--background: #202020;
 	--markdown-text: #dcddde;
 }
@@ -22,7 +23,7 @@ html, body {
 }
 
 body {	
-	background-color: var(--background-dark);
+	background-color: var(--background-black);
 }
 
 body {
@@ -68,10 +69,14 @@ body [contenteditable] {
 
 .markdown-view-block {
 	display: block;
+	padding: 5px;
 }
 
 .markdown-editor-block {
 	display: block;
+	padding: 5px;
+	border-radius: 5px;
+	background-color: var(--background-dark);
 }
 
 [contenteditable] {

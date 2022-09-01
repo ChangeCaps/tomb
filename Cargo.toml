@@ -9,7 +9,7 @@ edition = "2021"
 members = ["src-tauri"]
 
 [dependencies]
-markdown = "0.3"
+pulldown-cmark = "0.9"
 js-sys = "0.3"
 futures-lite = "1.12"
 serde = { version = "1.0", features = ["derive"] }

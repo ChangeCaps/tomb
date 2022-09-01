@@ -1,3 +1,5 @@
+use pulldown_cmark::{html, Options, Parser};
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct Markdown {
     pub blocks: Vec<MarkdownBlock>,
@@ -23,9 +25,19 @@ impl Markdown {
     pub fn block_edit(&mut self, MarkdownBlockEdit(i, block): MarkdownBlockEdit) {
         self.blocks[i] = block;
     }
+
+    pub fn block_insert(&mut self, MarkdownBlockInsert(i, block): MarkdownBlockInsert) {
+        self.blocks.insert(i, block);
+    }
+
+    pub fn block_remove(&mut self, MarkdownBlockRemove(i): MarkdownBlockRemove) {
+        self.blocks.remove(i);
+    }
 }
 
 pub struct MarkdownBlockEdit(pub usize, pub MarkdownBlock);
+pub struct MarkdownBlockInsert(pub usize, pub MarkdownBlock);
+pub struct MarkdownBlockRemove(pub usize);
 
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct MarkdownBlock {
@@ -42,6 +54,11 @@ impl MarkdownBlock {
     }
 
     pub fn html(&self) -> String {
-        markdown::to_html(&self.text)
+        let parser = Parser::new_ext(&self.text, Options::all());
+
+        let mut html = String::new();
+        html::push_html(&mut html, parser);
+
+        html
     }
 }

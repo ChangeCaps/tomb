@@ -3,13 +3,15 @@ mod log;
 mod markdown;
 mod markdown_editor;
 
-use crate::markdown::{Markdown, MarkdownBlockEdit};
+use markdown::{Markdown, MarkdownBlockEdit, MarkdownBlockInsert, MarkdownBlockRemove};
 use yew::prelude::*;
 
 use markdown_editor::MarkdownEditor;
 
 enum ModelMessage {
     BlockEdit(MarkdownBlockEdit),
+    BlockInsert(MarkdownBlockInsert),
+    BlockRemove(MarkdownBlockRemove),
 }
 
 #[derive(Properties, PartialEq, Default)]
@@ -36,6 +38,17 @@ impl Component for Model {
 
                 true
             }
+            ModelMessage::BlockInsert(insert) => {
+                self.markdown.block_insert(insert);
+                log!("block insert");
+
+                true
+            }
+            ModelMessage::BlockRemove(remove) => {
+                self.markdown.block_remove(remove);
+
+                true
+            }
         }
     }
 
@@ -45,6 +58,7 @@ impl Component for Model {
                 <MarkdownEditor
                     markdown={ self.markdown.clone() }
                     onblockedit={ ctx.link().callback(ModelMessage::BlockEdit) }
+                    onblockinsert={ ctx.link().callback(ModelMessage::BlockInsert) }
                 />
             </div>
         }
