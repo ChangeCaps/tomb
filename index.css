@@ -42,7 +42,7 @@ body [contenteditable] {
 	flex-direction: column;
 }
 
-.markdown-view {
+.document-view {
 	display: flex;
 	align-items: flex-start;
 	position: relative;
@@ -53,7 +53,7 @@ body [contenteditable] {
 	padding: 20px;
 }
 
-.markdown-content {	
+.document-content {	
 	cursor: text;
 
 	display: block;
@@ -67,18 +67,22 @@ body [contenteditable] {
 	color: var(--markdown-text);
 }
 
-.markdown-view-block {
+.document-block {
 	display: block;
-	padding: 5px;
+	padding: 5px;	
+	border-radius: 5px;
 }
 
-.markdown-editor-block {
-	display: block;
-	padding: 5px;
-	border-radius: 5px;
+.document-view-block:hover {
 	background-color: var(--background-dark);
 }
 
-[contenteditable] {
-	outline: 0px;
+.document-editor-block {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	background-color: var(--background-dark);
+}
+
+.document-editor-block [contenteditable] {
+	outline-width: 5px;
 }

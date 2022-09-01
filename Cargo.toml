@@ -9,6 +9,7 @@ edition = "2021"
 members = ["src-tauri"]
 
 [dependencies]
+tauri-invoke = "0.1"
 pulldown-cmark = "0.9"
 js-sys = "0.3"
 futures-lite = "1.12"
@@ -16,4 +17,10 @@ serde = { version = "1.0", features = ["derive"] }
 yew = "0.19"
 wasm-bindgen = { version = "0.2", features = ["serde-serialize"] }
 wasm-bindgen-futures = "0.4"
-web-sys = "0.3"
+
+[dependencies.web-sys] 
+version = "0.3"
+features = [
+	"Selection",
+	"Range",
+]
